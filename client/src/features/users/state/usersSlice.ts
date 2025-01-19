@@ -84,9 +84,10 @@ const usersSlice = createSlice({
       .addCase(fetchLogin.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchLogin.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(fetchLogin.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.user.token = action.payload.token
         state.loggedIn = true;
         state.error = null;  // Clear error on successful login
       })

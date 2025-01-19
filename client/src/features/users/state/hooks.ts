@@ -35,6 +35,7 @@ export const useFetchRegister = () => {
 export const useLogout = () => {
   const dispatch = useDispatch<AppDispatch>();
   return useCallback(()=> {
+    
     dispatch(logout())
   }, [])
 }

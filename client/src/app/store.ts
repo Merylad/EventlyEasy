@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // Default is localStorage for web
 import userReducer from "../features/users/state/usersSlice";
+import eventsReducer from '../features/events/state/eventsSlice'
 
 const persistConfig = {
   key: "root", // Key for localStorage
@@ -10,6 +11,7 @@ const persistConfig = {
 
 const appReducer = combineReducers({
   user: userReducer,
+  events : eventsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, appReducer);

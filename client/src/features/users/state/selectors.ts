@@ -3,5 +3,6 @@ import { selectUser } from "./usersSlice";
 
 export const selectorUserState = createSelector(
     [selectUser],
-    (userState) => userState.user
+    (userState) => {
+      return userState.user}
   );

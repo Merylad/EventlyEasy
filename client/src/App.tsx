@@ -4,6 +4,7 @@ import Register from './components/Register'
 import Navbar from './components/Navbar'
 import { Routes, Route } from 'react-router-dom'
 import Homepage from './components/HomePage'
+import MyEvents from './components/MyEvents'
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
     <Route path='/' element={<Homepage/>} />
     <Route path='/login' element={<Login />} />
     <Route path='/register' element={<Register />} />
+    <Route path = '/myevents' element = {<MyEvents />} />
 
     </Routes>
     </>

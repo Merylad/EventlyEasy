@@ -61,6 +61,12 @@ const Navbar = () :ReactElement => {
           Home
         </a>
         <a
+          href="/myevents"
+          className="text-white text-sm font-medium hover:underline">
+          My Events
+          
+        </a>
+        <a
           href="/"
           onClick={()=>logout()}
           className="text-white text-sm font-medium hover:underline">

@@ -31,7 +31,6 @@ export const addEvent = async (req : Request, res: Response)=>{
 
 export const deleteEvent = async (req : Request, res : Response) => {
     const {eventId} = req.params
-    console.log(eventId)
 
     try {
         await deleteEventDB(eventId)
