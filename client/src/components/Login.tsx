@@ -1,12 +1,14 @@
-import axios from "axios";
 import { ReactElement, useState } from "react";
+import { useUserSelector } from "../features/users/state/hooks";
+import { useFetchLogin, useSetError } from "../features/users/state/hooks";
 
 const Login = (): ReactElement => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [error, setError] = useState<string>('');
-
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+    const { loggedIn, user, status, error } = useUserSelector()
+    const login = useFetchLogin()
+    const setError = useSetError()
+    console.log(user)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -17,24 +19,13 @@ const Login = (): ReactElement => {
             return;
         }
 
-        try {
-            const response = await axios.post(
-                `${apiBaseUrl}/api/users/login`,
-                { email, password },
-                { withCredentials: true }
-            );
-
-            const { user, token } = response.data;
-            console.log({ user, token });
-        } catch (error: any) {
-            console.log(error);
-            setError(error.response?.data?.message || 'An error occurred. Please try again later.');
-        }
+       login(email,password)
     };
+
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl shadow-xl">
-          <h2 className="text-3xl font-bold text-center text-white mb-6">Login</h2>
+          <h2 className="text-3xl font-bold text-center text-white mb-6">Sign in</h2>
     
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Input */}

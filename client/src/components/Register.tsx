@@ -1,11 +1,19 @@
 import axios from "axios";
 import { ReactElement, useState } from "react";
+import { useFetchRegister, useSetError, useFetchLogin } from "../features/users/state/hooks";
+import { useUserSelector } from "../features/users/state/hooks";
+import { useNavigate } from "react-router-dom";
+
 
 const Register = (): ReactElement => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [username, setUsername] = useState<string>('');
-    const [error, setError] = useState<string>('');
+    const { loggedIn, user, status, error } = useUserSelector()
+    const register = useFetchRegister()
+    const login = useFetchLogin()
+    const setError = useSetError()
+    const navigate = useNavigate()
 
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -18,18 +26,11 @@ const Register = (): ReactElement => {
             return;
         }
 
-        try {
-            const response = await axios.post(
-                `${apiBaseUrl}/api/users/register`,
-                { email, password, username },
-                { withCredentials: true }
-            );
+        register(email, password, username)
 
-            const { user } = response.data;
-            console.log({ user });
-        } catch (error: any) {
-            console.log(error);
-            setError(error.response?.data?.message || 'An error occurred. Please try again later.');
+        if(error === null) {
+            login(email, password)
+            navigate('/')
         }
     };
 

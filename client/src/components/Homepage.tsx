@@ -1,9 +1,10 @@
 import { ReactElement } from "react";
+import logo from '../images/logo.png'
 
 const Homepage = () :ReactElement => {
     return (
         <>
-            <h1>EvenlyEasy</h1>
+            <img src={logo} alt="logo" style={{width : '100%'}}/>
         </>
     )
 }

@@ -45,9 +45,16 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 export const login = async (req: Request, res: Response) => {
     const {email, password} = req.body
 
+
     if (!email.trim() || !password.trim()) {
         res.status(400).json({ message: 'Email and password are required' });
         return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        res.status(400).json({ message: 'Invalid email format' });
+        return
     }
 
     try {

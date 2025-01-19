@@ -1,14 +1,25 @@
 import { ReactElement } from "react";
+import logo from '../images/name.png'
+import { useUserSelector } from "../features/users/state/hooks";
+import { useLogout } from "../features/users/state/hooks";
+
+
 
 const Navbar = () :ReactElement => {
+
+  const { loggedIn} = useUserSelector()
+  const logout = useLogout()
+
+
+  if (loggedIn === false){
     return (
         <>
-            <nav className="bg-gradient-to-r from-purple-600 to-indigo-600 p-4 shadow-lg">
+            <nav className="bg-gradient-to-l from-purple-600 to-indigo-600 p-4 shadow-lg">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         {/* Left Side: Logo */}
-        <div className="text-white text-2xl font-bold">
-          EventlyEasy
-        </div>
+        <img src={logo} alt="logo"  />
+
+       
 
         {/* Right Side: Links */}
         <div className="flex space-x-4">
@@ -32,6 +43,37 @@ const Navbar = () :ReactElement => {
     </nav>
         </>
     )
+  } else {
+    return (
+      <>
+          <nav className="bg-gradient-to-l from-purple-600 to-indigo-600 p-4 shadow-lg">
+    <div className="max-w-6xl mx-auto flex justify-between items-center">
+      {/* Left Side: Logo */}
+      <img src={logo} alt="logo"  />
+
+     
+
+      {/* Right Side: Links */}
+      <div className="flex space-x-4">
+      <a
+          href="/"
+          className="text-white text-sm font-medium hover:underline">
+          Home
+        </a>
+        <a
+          href="/"
+          onClick={()=>logout()}
+          className="text-white text-sm font-medium hover:underline">
+          logout
+          
+        </a>
+       
+      </div>
+    </div>
+  </nav>
+      </>
+  )
+  }
 }
 
 export default Navbar
