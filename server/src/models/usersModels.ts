@@ -19,7 +19,7 @@ export const registerDB = async(email : string, password : string, username: str
             email : email.toLocaleLowerCase(),
             password : hashPassword,
             username : username.toLocaleLowerCase()
-        }, ['email', 'id'])
+        }, ['email', 'id', 'username'])
 
         return user
     } catch (error : any) {
