@@ -57,3 +57,29 @@ export const updateEventDB = async (name : string, date : Date, eventId : string
         throw error
     }
 }
+
+export const getEventByIdDB = async(id : string | number) => {
+    try {
+        const [event] = await db('events')
+        .select ('id', 'name', 'date')
+        .where ({id})
+
+        return event
+    } catch (error) {
+        throw error
+    }
+}
+
+export const getPlacesByEventDB = async (id : string | number) => {
+    try {
+        const places = await db('places')
+        .select('*')
+        .where ({event_id : id})
+
+        
+
+        return places
+    } catch (error) {
+        throw error
+    }
+}

@@ -3,11 +3,11 @@ import axios from "axios";
 import { RootState } from "../../../app/store";
 
 // Define types for the slice state
-interface Event {
+export interface Event {
   id: string | number;
   user_id : string|number
   name : string
-  date : Date
+  date : Date 
 }
 
 interface EventsState {
@@ -64,6 +64,20 @@ export const fetchDeleteEvent = createAsyncThunk (
     }
 )
 
+export const fetchUpdateEvent = createAsyncThunk (
+  'events/fetchUpdateEvent',
+  async({eventId, name, date} : {eventId : string|number, name : string, date : string|Date}, {rejectWithValue}) => {
+      try {
+          const response = await axios.put(`${apiBaseUrl}/api/events/update/${eventId}`,
+            {name, date}
+          )
+          return response.data
+      } catch (error: any) {
+          return rejectWithValue(error.response.data);
+      }
+  }
+)
+
 
 
 const eventsSlice = createSlice({
@@ -83,6 +97,9 @@ const eventsSlice = createSlice({
 })
 .addCase(fetchDeleteEvent.fulfilled, (state, action) => {
     state.message = action.payload.message
+})
+.addCase(fetchUpdateEvent.fulfilled, (state, action) => {
+  state.message = action.payload.message
 })
   },
 });

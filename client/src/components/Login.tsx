@@ -1,11 +1,14 @@
 import { ReactElement, useState } from "react";
 import { useUserSelector } from "../features/users/state/hooks";
 import { useFetchLogin, useSetError } from "../features/users/state/hooks";
+import { useNavigate } from "react-router-dom";
 
 const Login = (): ReactElement => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const { loggedIn, user, status, error } = useUserSelector()
+
+    const navigate = useNavigate()
     const login = useFetchLogin()
     const setError = useSetError()
     console.log(user)
