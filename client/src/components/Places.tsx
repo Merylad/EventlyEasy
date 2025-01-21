@@ -9,7 +9,7 @@ type PlacesT = {
   id: string | number;
   name: string;
   url?: string;
-  price?: number | string;
+  price?: number | string ;
   final_choice: boolean;
   description?: string;
   pros?: string[];
@@ -64,7 +64,7 @@ const Places = (props: PlacesProps): ReactElement => {
       setFormData({
         name: "",
         url: "",
-        price: "",
+        price: '',
         description: "",
         pros: "",
         cons: "",
@@ -77,13 +77,13 @@ const Places = (props: PlacesProps): ReactElement => {
     e.preventDefault();
     try {
       if (isUpdating && currentPlace) {
-        await axios.put(`${apiBaseUrl}/api/places/${currentPlace.id}`, {
+        await axios.put(`${apiBaseUrl}/api/events/places/update/${currentPlace.id}`, {
           ...formData,
           pros: formData.pros.split(",").map((pro) => pro.trim()),
           cons: formData.cons.split(",").map((con) => con.trim()),
         });
       } else {
-        await axios.post(`${apiBaseUrl}/api/places`, {
+        await axios.post(`${apiBaseUrl}/api/events/places/addPlace`, {
           ...formData,
           pros: formData.pros.split(",").map((pro) => pro.trim()),
           cons: formData.cons.split(",").map((con) => con.trim()),
@@ -91,7 +91,6 @@ const Places = (props: PlacesProps): ReactElement => {
         });
       }
       setIsModalOpen(false);
-      getPlaces();
     } catch (error) {
       console.error(error);
     }
@@ -99,8 +98,7 @@ const Places = (props: PlacesProps): ReactElement => {
 
   const handleDelete = async (id: number | string) => {
     try {
-      await axios.delete(`${apiBaseUrl}/api/places/${id}`);
-      getPlaces();
+      await axios.delete(`${apiBaseUrl}/api/events/places/delete/${id}`);
     } catch (error) {
       console.error(error);
     }
@@ -119,7 +117,9 @@ const Places = (props: PlacesProps): ReactElement => {
 
   useEffect(() => {
     getPlaces();
-  }, []);
+  }, [eventPlaces]);
+
+
 
   return (
     <>
@@ -132,6 +132,12 @@ const Places = (props: PlacesProps): ReactElement => {
           Add a Location
         </button>
       </div>
+
+      {eventPlaces?.length == 0 && (
+        <div>
+          <h1 className="text-3xl font-bold text-center my-8">You don't have any location yet :)</h1>          
+        </div>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {eventPlaces?.map((place: PlacesT) => (
           <div
@@ -144,7 +150,7 @@ const Places = (props: PlacesProps): ReactElement => {
             <p className="text-gray-600 mt-2">{place.description}</p>
             <div className="mt-4">
               <h3 className="font-bold text-gray-800">Price:</h3>
-              <p className="text-gray-600">${parseFloat(place.price as string).toFixed(2)}</p>
+              <p className="text-gray-600"> {place.price !== '' ? `ILS ${place.price}` : 'No price'}</p>
             </div>
             <div className="mt-4">
               <h3 className="font-bold text-gray-800">Pros:</h3>

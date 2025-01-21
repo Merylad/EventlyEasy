@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
-import { getEventsByUserDB, addEventDB, deleteEventDB, updateEventDB, getEventByIdDB, getPlacesByEventDB } from "../models/eventsModels";
+import { getEventsByUserDB, addEventDB, deleteEventDB, updateEventDB, getEventByIdDB, getPlacesByEventDB, addPlaceDB,
+    updatePlaceDB, deletePlaceDB
+ } from "../models/eventsModels";
 
 export const getEventsByUser = async (req : Request, res: Response) => {
     const {userId} = req.params
@@ -77,6 +79,50 @@ export const getPlacesByEvent = async (req : Request, res: Response) => {
         const places = await getPlacesByEventDB(eventId)
         res.status(201).json({places})
         
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const addPlace = async (req : Request, res: Response) => {
+    const newPlace = req.body
+    
+
+    try {
+        const place = await addPlaceDB(newPlace)
+        res.status(201).json({
+            message : 'New location added successfully!',
+            place 
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const updatePlace = async (req : Request, res: Response) => {
+    const updatedPlace = req.body
+    const {placeId} = req.params
+
+    try {
+        const place = await updatePlaceDB(updatedPlace, placeId)
+        res.status(201).json({
+            message : 'Location updated successfully!',
+            place 
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const deletePlace = async (req : Request, res: Response) => {
+    const {placeId} = req.params
+
+    try {
+        await deletePlaceDB(placeId)
+        res.status(201).json({message : 'Location deleted successfully'})
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: 'Internal server error' });

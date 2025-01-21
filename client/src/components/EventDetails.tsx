@@ -36,7 +36,7 @@ const EventDetails = () : ReactElement => {
         <>
              <div className="flex flex-col items-center bg-gray-100 py-8">
                 <h1 className="text-4xl font-extrabold text-center text-purple-800 mb-4">
-                {currentEvent.name}
+                {currentEvent?.name}
                 </h1>
                 <h2 className="text-2xl font-medium text-center text-pink-600">
                 {formatDate(currentEvent.date)}

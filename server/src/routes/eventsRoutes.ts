@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getEventsByUser, addEvent, deleteEvent, updateEvent, getEventById, getPlacesByEvent } from "../controllers/eventsControllers";
+import { getEventsByUser, addEvent, deleteEvent, updateEvent, getEventById, getPlacesByEvent, addPlace, updatePlace, deletePlace} from "../controllers/eventsControllers";
 
 const router = Router()
 
@@ -11,5 +11,8 @@ router.put('/update/:eventId', updateEvent)
 router.get('/event/:eventId', getEventById)
 
 router.get('/places/byevent/:eventId', getPlacesByEvent)
+router.post('/places/addPlace', addPlace)
+router.put('/places/update/:placeId', updatePlace)
+router.delete('/places/delete/:placeId', deletePlace )
 
 export default router

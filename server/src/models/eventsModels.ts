@@ -7,6 +7,18 @@ interface Event {
     date: Date;
 }
 
+type PlacesT = {
+    id?: string | number;
+    name: string;
+    url?: string;
+    price?: number | string;
+    final_choice: boolean;
+    description?: string;
+    pros?: string[];
+    cons?: string[];
+    event_id: string | number;
+  };
+
 export const getEventsByUserDB = async(id : number | string) => {
     try {
         const events = await db('events')
@@ -79,6 +91,44 @@ export const getPlacesByEventDB = async (id : string | number) => {
         
 
         return places
+    } catch (error) {
+        throw error
+    }
+}
+
+export const addPlaceDB = async(place : PlacesT) => {
+    const {name, url, price, description, final_choice, pros, cons, event_id} = place
+
+    try {
+        const newPlace = await db('places')
+        .insert({name, url, price, description, final_choice, pros, cons, event_id}, ['*'])
+
+        return newPlace
+    } catch (error) {
+        throw error
+    }
+}
+
+export const updatePlaceDB = async (place : PlacesT, id : string | number) => {
+    const {name, url, price, description, final_choice, pros, cons} = place
+
+    try {
+        const updatedPlace = await db('places')
+        .update ({name, url, price, description, final_choice, pros, cons}, ['*'])
+        .where({id})
+
+        return updatedPlace
+    } catch (error) {
+        throw error
+    }
+}
+
+export const deletePlaceDB = async (id : string | number) => {
+    try {
+        await db('places')
+        .delete()
+        .where({id})
+
     } catch (error) {
         throw error
     }

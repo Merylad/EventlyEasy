@@ -39,11 +39,11 @@ const MyEvents = (): ReactElement => {
     e.preventDefault();
 
     if (currentEvent) {
-      // Update event logic
+      
       updateEvent(currentEvent.id, name, date);
      
     } else {
-      // Add event logic
+      
       addEvent(user.id, name, date);
       
     }
@@ -68,8 +68,12 @@ const MyEvents = (): ReactElement => {
     const day = String(eventDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
     setDate(formattedDate);
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true); 
   };
+
+  
+
+ 
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-4">
@@ -88,6 +92,12 @@ const MyEvents = (): ReactElement => {
       >
         Add an Event
       </button>
+
+      {events?.length == 0 && (
+      <div>
+        <h1 className="text-3xl font-bold text-center my-8">You don't have any event yet :)</h1>          
+      </div>
+  )}
 
       <div className="space-y-6">
         {events.map((event : Event) => {
