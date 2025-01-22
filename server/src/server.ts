@@ -19,14 +19,17 @@ app.use('/api/users', usersRouter)
 app.use('/api/events', eventsRouter)
 app.use('/api/events/todos', todosRouter)
 
+console.log(path.join(__dirname, '../../client/dist'))
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../../client/dist', 'index.html'));
   });
+
+console.log('resolve',path.resolve(__dirname, '../../client/dist', 'index.html') )
 
