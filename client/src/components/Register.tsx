@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import { ReactElement, useState } from "react";
 import { useFetchRegister, useSetError, useFetchLogin } from "../features/users/state/hooks";
 import { useUserSelector } from "../features/users/state/hooks";
@@ -9,13 +9,13 @@ const Register = (): ReactElement => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [username, setUsername] = useState<string>('');
-    const { loggedIn, user, status, error } = useUserSelector()
+    const { error } = useUserSelector()
     const register = useFetchRegister()
     const login = useFetchLogin()
     const setError = useSetError()
     const navigate = useNavigate()
 
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
