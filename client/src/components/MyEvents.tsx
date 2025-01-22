@@ -33,7 +33,7 @@ const MyEvents = (): ReactElement => {
 
   useEffect(() => {
     getEvents(user.id);
-  }, [events]);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,10 +41,12 @@ const MyEvents = (): ReactElement => {
     if (currentEvent) {
       
       updateEvent(currentEvent.id, name, date);
+      getEvents(user.id);
      
     } else {
       
       addEvent(user.id, name, date);
+      getEvents(user.id);
       
     }
 

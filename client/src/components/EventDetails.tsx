@@ -4,6 +4,7 @@ import axios from "axios";
 import { Event } from "../features/events/state/eventsSlice";
 import { formatDate } from "./MyEvents";
 import Places from "./Places";
+import Todo from "./Todo";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -44,6 +45,7 @@ const EventDetails = () : ReactElement => {
             </div>
 
             <Places eventId = {eventId}/>
+            <Todo eventId = {eventId}/>
         </>
     )
 }

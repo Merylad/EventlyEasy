@@ -3,6 +3,7 @@ import cors from 'cors';
 import { db } from "./config/db";
 import usersRouter from './routes/usersRoutes'
 import eventsRouter from './routes/eventsRoutes'
+import todosRouter from './routes/todosRoutes'
 
 const app = express();
 const PORT = 3000;
@@ -15,6 +16,7 @@ app.use(cors({
 
 app.use('/api/users', usersRouter)
 app.use('/api/events', eventsRouter)
+app.use('/api/events/todos', todosRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

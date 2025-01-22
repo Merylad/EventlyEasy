@@ -11,7 +11,6 @@ const Login = (): ReactElement => {
     const navigate = useNavigate()
     const login = useFetchLogin()
     const setError = useSetError()
-    console.log(user)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
