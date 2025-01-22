@@ -66,6 +66,15 @@ export const fetchToggleTodo = createAsyncThunk('todos/fetchToggleTodo', async({
   }
 })
 
+export const fetchDeleteTodo = createAsyncThunk('todos/fetchDeleteTodo', async({todoId} : {todoId : string|number}, {rejectWithValue})=>{
+  try {
+    const response = await axios.delete(`${apiBaseUrl}/api/events/todos/deletetodo/${todoId}`)
+    return response.data
+  } catch (error : any) {
+    return rejectWithValue(error.response.data);
+  }
+})
+
 
 
 const todoSlice = createSlice({
@@ -93,6 +102,18 @@ const todoSlice = createSlice({
       state.message = action.payload.message
     })
     .addCase(fetchUpdateTodo.rejected, (state, action:any) => {
+      state.message = action.payload.message
+    })
+    .addCase(fetchToggleTodo.fulfilled, (state, action) => {
+      state.message = action.payload.message
+    })
+    .addCase(fetchToggleTodo.rejected, (state, action:any) => {
+      state.message = action.payload.message
+    })
+    .addCase(fetchDeleteTodo.fulfilled, (state, action) => {
+      state.message = action.payload.message
+    })
+    .addCase(fetchDeleteTodo.rejected, (state, action:any) => {
       state.message = action.payload.message
     })
 

@@ -79,3 +79,4 @@ export const toggleTodoDB = async (id:string | number) => {
         throw error
     }
 }
+

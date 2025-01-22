@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useTodoSelector, useFetchTodos, useFetchAddTodos, useFetchUpdateTodo, useFetchToggleTodo } from "../features/todos/state/hooks";
+import { useTodoSelector, useFetchTodos, useFetchAddTodos, useFetchUpdateTodo, useFetchToggleTodo, useFetchDeleteTodo } from "../features/todos/state/hooks";
 import { TodoI, NewTodoI } from "../features/todos/state/todoSlice";
 
 
@@ -29,6 +29,7 @@ const Todo = (props : TodoProps) :ReactElement => {
   const addTodo = useFetchAddTodos()
   const updateTodo = useFetchUpdateTodo()
   const toggleTodo = useFetchToggleTodo()
+  const deleteTodo = useFetchDeleteTodo()
     
     
 
@@ -87,19 +88,18 @@ const Todo = (props : TodoProps) :ReactElement => {
       const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (isUpdating && currentTodo) {
-          updateTodo(formData, currentTodo.id)
+          updateTodo(formData, currentTodo.id, eventId)
           getTodos(eventId)
           console.log("Updating todo:", { ...currentTodo, ...formData });
         } else {
-          addTodo(formData)
+          addTodo(formData, eventId)
           getTodos(eventId)
         }
         closeModal();
       };
     
       const handleDelete = (id: number | string) => {
-        // Call delete API here
-        console.log("Deleting todo with ID:", id);
+        deleteTodo(id, eventId)
       };
     
       const toggleCompletion = (id: number | string) => {
@@ -120,61 +120,119 @@ const Todo = (props : TodoProps) :ReactElement => {
           Add a Task
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {todos.map((todo: TodoI) =>
-    <div
-      key={todo.id}
-      className={`p-6 bg-white shadow-lg rounded-lg border ${
-        todo.is_completed ? "border-gray-100" : "border-gray-400"
-      }`}
-    >
-      <h1
-        className={`text-2xl font-semibold text-gray-800 ${
-          todo.is_completed ? "line-through text-gray-500" : ""
-        }`}
-      >
-        {todo.title}
-      </h1>
-      <p className="text-gray-600 mt-2">{todo.description}</p>
-      <span
-        className={`inline-block mt-4 px-3 py-1 text-sm font-medium rounded-full ${
-          todo.priority === "high"
-            ? "bg-red-100 text-red-800"
-            : todo.priority === "medium"
-            ? "bg-yellow-100 text-yellow-800"
-            : "bg-green-100 text-green-800"
-        }`}
-      >
-        {todo.priority}
-      </span>
-      <div className="mt-6 flex justify-between items-center">
-        <label className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            checked={todo.is_completed}
-            onChange={() => toggleCompletion(todo.id)}
-            className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-          />
-          <span>Completed</span>
-        </label>
-        <div className="flex space-x-4">
-          <button
-            onClick={() => openModal(todo)}
-            className="px-4 py-2 bg-blue-100 text-blue-500 text-sm font-medium rounded-md hover:bg-blue-200"
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+  {/* Left column: Incomplete tasks */}
+  <div className="space-y-6">
+    <h2 className="text-lg font-semibold text-gray-700">Incomplete Tasks</h2>
+    {todos
+      .filter((todo: TodoI) => !todo.is_completed)
+      .sort((a, b) => {
+        const priorityOrder: Record<string, number> = { high: 1, medium: 2, low: 3 };
+        const priorityA = a.priority ?? "low"; // Default null to "low"
+        const priorityB = b.priority ?? "low"; // Default null to "low"
+        return priorityOrder[priorityA] - priorityOrder[priorityB];
+      })
+      .map((todo: TodoI) => (
+        <div
+          key={todo.id}
+          className="p-6 bg-white shadow-lg rounded-lg border border-gray-400"
+        >
+          <h1 className="text-2xl font-semibold text-gray-800">{todo.title}</h1>
+          <p className="text-gray-600 mt-2">{todo.description}</p>
+          <span
+            className={`inline-block mt-4 px-3 py-1 text-sm font-medium rounded-full ${
+              todo.priority === "high"
+                ? "bg-red-100 text-red-800"
+                : todo.priority === "medium"
+                ? "bg-yellow-100 text-yellow-800"
+                : "bg-green-100 text-green-800"
+            }`}
           >
-            Update
-          </button>
-          <button
-            onClick={() => handleDelete(todo.id!)}
-            className="px-4 py-2 bg-red-100 text-red-500 text-sm font-medium rounded-md hover:bg-red-200"
-          >
-            Delete
-          </button>
+            {todo.priority}
+          </span>
+          <div className="mt-6 flex justify-between items-center">
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={todo.is_completed}
+                onChange={() => toggleCompletion(todo.id)}
+                className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+              />
+              <span>Completed</span>
+            </label>
+            <div className="flex space-x-4">
+              <button
+                onClick={() => openModal(todo)}
+                className="px-4 py-2 bg-blue-100 text-blue-500 text-sm font-medium rounded-md hover:bg-blue-200"
+              >
+                Update
+              </button>
+              <button
+                onClick={() => handleDelete(todo.id!)}
+                className="px-4 py-2 bg-red-100 text-red-500 text-sm font-medium rounded-md hover:bg-red-200"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-)}
-      </div>
+      ))}
+  </div>
+
+  {/* Right column: Completed tasks */}
+  <div className="space-y-6">
+    <h2 className="text-lg font-semibold text-gray-700">Completed Tasks</h2>
+    {todos
+      .filter((todo: TodoI) => todo.is_completed)
+      .map((todo: TodoI) => (
+        <div
+          key={todo.id}
+          className="p-6 bg-white shadow-lg rounded-lg border border-gray-100"
+        >
+          <h1 className="text-2xl font-semibold text-gray-500 line-through">
+            {todo.title}
+          </h1>
+          <p className="text-gray-600 mt-2">{todo.description}</p>
+          <span
+            className={`inline-block mt-4 px-3 py-1 text-sm font-medium rounded-full ${
+              todo.priority === "high"
+                ? "bg-red-100 text-red-800"
+                : todo.priority === "medium"
+                ? "bg-yellow-100 text-yellow-800"
+                : "bg-green-100 text-green-800"
+            }`}
+          >
+            {todo.priority}
+          </span>
+          <div className="mt-6 flex justify-between items-center">
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={todo.is_completed}
+                onChange={() => toggleCompletion(todo.id)}
+                className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+              />
+              <span>Completed</span>
+            </label>
+            <div className="flex space-x-4">
+              <button
+                onClick={() => openModal(todo)}
+                className="px-4 py-2 bg-blue-100 text-blue-500 text-sm font-medium rounded-md hover:bg-blue-200"
+              >
+                Update
+              </button>
+              <button
+                onClick={() => handleDelete(todo.id!)}
+                className="px-4 py-2 bg-red-100 text-red-500 text-sm font-medium rounded-md hover:bg-red-200"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+  </div>
+</div>
 
       {isModalOpen && (
   <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
