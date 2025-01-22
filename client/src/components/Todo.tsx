@@ -102,9 +102,8 @@ const Todo = (props : TodoProps) :ReactElement => {
         console.log("Deleting todo with ID:", id);
       };
     
-      const toggleCompletion = (id: number | string, isCompleted: boolean) => {
-        // Call toggle completion API here
-        console.log("Toggling completion for ID:", id, "to", !isCompleted);
+      const toggleCompletion = (id: number | string) => {
+        toggleTodo(id, eventId)
       };
 
     return (
@@ -153,7 +152,7 @@ const Todo = (props : TodoProps) :ReactElement => {
           <input
             type="checkbox"
             checked={todo.is_completed}
-            onChange={() => toggleCompletion(todo.id!, todo.is_completed)}
+            onChange={() => toggleCompletion(todo.id)}
             className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
           />
           <span>Completed</span>
@@ -226,7 +225,7 @@ const Todo = (props : TodoProps) :ReactElement => {
           <select
             name="priority"
             id="priority"
-            value={formData.priority}
+            value={formData.priority || 'low'}
             onChange={handleInputChange} 
             className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
