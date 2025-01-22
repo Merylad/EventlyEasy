@@ -5,6 +5,8 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
+    "noUnusedLocals": false, // Disable unused variable warnings
+    "noUnusedParameters": false, // Disable unused parameter warnings
     "esModuleInterop": true
   },
   "include": ["src"],
