@@ -17,7 +17,7 @@ type PlacesT = {
   event_id: string | number;
 };
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || ''
 
 const Places = (props: PlacesProps): ReactElement => {
   const eventId = props.eventId;
