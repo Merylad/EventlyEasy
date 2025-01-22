@@ -18,7 +18,7 @@ interface EventsState {
 // Define the initial state using the UsersState type
 const initialState: EventsState = {
 events : [],
-message : 'Hello'
+message : ''
 };
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -45,6 +45,7 @@ export const fetchAddEvents = createAsyncThunk(
           `${apiBaseUrl}/api/events/addevent/`,
           {userId, name, date}
       );
+        
         return response.data; 
       } catch (error : any) {
         return rejectWithValue(error.response.data);

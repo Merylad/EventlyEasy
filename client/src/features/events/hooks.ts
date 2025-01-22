@@ -19,8 +19,9 @@ export const useFetchEvents = () => {
 export const useFetchAddEvents = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    return useCallback((userId:string | number, name:string, date:string | Date) => {
-        dispatch(fetchAddEvents( {userId, name, date} ));
+    return useCallback(async(userId:string | number, name:string, date:string | Date) => {
+       await dispatch(fetchAddEvents( {userId, name, date} ));
+       dispatch(fetchEvents( {id :userId} ));
       }, [dispatch]);
 
 }
@@ -28,8 +29,9 @@ export const useFetchAddEvents = () => {
 export const useFetchDeleteEvents = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    return useCallback((eventId:string | number) => {
-        dispatch(fetchDeleteEvent( {eventId} ));
+    return useCallback(async (eventId:string | number, userId:string | number) => {
+        await dispatch(fetchDeleteEvent( {eventId} ));
+        dispatch(fetchEvents( {id :userId} ));
       }, [dispatch]);
 
 }
@@ -37,8 +39,9 @@ export const useFetchDeleteEvents = () => {
 export const useFetchUpdateEvent = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    return useCallback((eventId : string|number, name : string, date : string|Date) => {
-        dispatch(fetchUpdateEvent( {eventId, name, date}  ));
+    return useCallback(async (eventId : string|number, name : string, date : string|Date, userId:string | number) => {
+        await dispatch(fetchUpdateEvent( {eventId, name, date}  ));
+        dispatch(fetchEvents( {id :userId} ));
       }, [dispatch]);
 
 }

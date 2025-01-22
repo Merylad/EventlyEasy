@@ -77,18 +77,32 @@ const Places = (props: PlacesProps): ReactElement => {
     e.preventDefault();
     try {
       if (isUpdating && currentPlace) {
-        await axios.put(`${apiBaseUrl}/api/events/places/update/${currentPlace.id}`, {
+        try {
+          await axios.put(`${apiBaseUrl}/api/events/places/update/${currentPlace.id}`, {
           ...formData,
           pros: formData.pros.split(",").map((pro) => pro.trim()),
           cons: formData.cons.split(",").map((con) => con.trim()),
         });
+
+        getPlaces()
+        } catch (error) {
+          console.error(error);
+        }
+        
       } else {
-        await axios.post(`${apiBaseUrl}/api/events/places/addPlace`, {
+        try {
+          await axios.post(`${apiBaseUrl}/api/events/places/addPlace`, {
           ...formData,
           pros: formData.pros.split(",").map((pro) => pro.trim()),
           cons: formData.cons.split(",").map((con) => con.trim()),
           event_id: eventId,
         });
+
+        getPlaces()
+        } catch (error) {
+          console.error(error);
+        }
+        
       }
       setIsModalOpen(false);
     } catch (error) {
@@ -99,6 +113,7 @@ const Places = (props: PlacesProps): ReactElement => {
   const handleDelete = async (id: number | string) => {
     try {
       await axios.delete(`${apiBaseUrl}/api/events/places/delete/${id}`);
+      getPlaces()
     } catch (error) {
       console.error(error);
     }
@@ -115,9 +130,11 @@ const Places = (props: PlacesProps): ReactElement => {
     }
   };
 
+  
+
   useEffect(() => {
     getPlaces();
-  }, [eventPlaces]);
+  }, []);
 
 
 
@@ -143,7 +160,7 @@ const Places = (props: PlacesProps): ReactElement => {
           <div
             key={place.id}
             className={`p-6 bg-white shadow-lg rounded-lg border ${
-              place.final_choice ? "border-green-500" : "border-gray-200"
+              place.final_choice ? "border-blue-500" : "border-gray-200"
             }`}
           >
             <h2 className="text-2xl font-semibold text-gray-800">{place.name}</h2>
@@ -186,13 +203,13 @@ const Places = (props: PlacesProps): ReactElement => {
             <div className="mt-4 flex space-x-2">
               <button
                 onClick={() => openModal(place)}
-                className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700"
+                className="px-4 py-2 bg-blue-100 text-blue-500 text-sm font-medium rounded-md hover:bg-blue-200"
               >
                 Update
               </button>
               <button
                 onClick={() => handleDelete(place.id)}
-                className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700"
+                className="px-4 py-2 bg-red-100 text-red-500 text-sm font-medium rounded-md hover:bg-red-200"
               >
                 Delete
               </button>

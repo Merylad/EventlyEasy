@@ -4,7 +4,7 @@ import { fetchLogin, setError , fetchRegister, logout} from "./usersSlice";
 import { useCallback } from "react";
 import { AppDispatch } from "../../../app/store";
 
-export const useUserSelector = () => {
+export const useUserSelector = () => {  
     return useSelector(selectorUserState)
 }
 

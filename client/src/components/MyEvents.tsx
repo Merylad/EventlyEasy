@@ -40,13 +40,12 @@ const MyEvents = (): ReactElement => {
 
     if (currentEvent) {
       
-      updateEvent(currentEvent.id, name, date);
-      getEvents(user.id);
+      updateEvent(currentEvent.id, name, date, user.id);
+  
      
     } else {
       
       addEvent(user.id, name, date);
-      getEvents(user.id);
       
     }
 
@@ -55,8 +54,7 @@ const MyEvents = (): ReactElement => {
   };
 
   const handleDeleteEvent = (id: number | string) => {
-     deleteEvent(id);
-    getEvents(user.id);
+     deleteEvent(id, user.id);
   };
 
   const handleUpdateEvent = (event: Event) => {

@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useUserSelector } from "../features/users/state/hooks";
 import { useFetchLogin, useSetError } from "../features/users/state/hooks";
 import { useNavigate } from "react-router-dom";
@@ -22,9 +22,14 @@ const Login = (): ReactElement => {
         }
 
        login(email,password)
-       
     };
 
+    useEffect(()=> {
+      if(loggedIn === true){
+        
+        navigate('/')
+       }
+     }, [loggedIn])
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl shadow-xl">
