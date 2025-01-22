@@ -19,6 +19,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/events', eventsRouter)
 app.use('/api/events/todos', todosRouter)
 
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.listen(PORT, () => {
@@ -26,6 +27,6 @@ app.listen(PORT, () => {
 });
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
   });
 
