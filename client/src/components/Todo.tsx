@@ -227,7 +227,7 @@ const Todo = (props : TodoProps) :ReactElement => {
             name="priority"
             id="priority"
             value={formData.priority}
-            onChange={handleInputChange}
+            onChange={handleInputChange} 
             className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value="high">High</option>
