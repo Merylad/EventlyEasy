@@ -17,7 +17,7 @@ export const formatDate = (date: Date) => {
 
 
 const MyEvents = (): ReactElement => {
-  const { loggedIn, user, status, error } = useUserSelector();
+  const { user } = useUserSelector();
   const { events } = useEventsSelector();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentEvent, setCurrentEvent] = useState<Event | null>(null);

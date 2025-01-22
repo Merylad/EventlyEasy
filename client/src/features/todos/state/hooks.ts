@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../../app/store";
 import { useCallback } from "react";
 import { selectorTodoState } from "./selectors";
-import { fetchTodos, fetchAddTodos, NewTodoI, TodoI, fetchUpdateTodo, fetchToggleTodo, fetchDeleteTodo } from "./todoSlice";
+import { fetchTodos, fetchAddTodos, NewTodoI, fetchUpdateTodo, fetchToggleTodo, fetchDeleteTodo } from "./todoSlice";
 
 export const useTodoSelector = () => {
     return useSelector(selectorTodoState)

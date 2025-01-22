@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Login = (): ReactElement => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const { loggedIn, user, status, error } = useUserSelector()
+    const { loggedIn, error } = useUserSelector()
 
     const navigate = useNavigate()
     const login = useFetchLogin()
