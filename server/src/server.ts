@@ -1,10 +1,10 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import path from 'path';
 import cors from 'cors';
-import { db } from "./config/db";
 import usersRouter from './routes/usersRoutes'
 import eventsRouter from './routes/eventsRoutes'
 import todosRouter from './routes/todosRoutes'
+import guestsRouter from './routes/guestsRoutes'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +18,7 @@ app.use(cors({
 app.use('/api/users', usersRouter)
 app.use('/api/events', eventsRouter)
 app.use('/api/events/todos', todosRouter)
+app.use('/api/events/guests', guestsRouter)
 
 console.log(path.join(__dirname, '../../client/dist'))
 

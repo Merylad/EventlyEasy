@@ -89,11 +89,11 @@ const Todo = (props : TodoProps) :ReactElement => {
         e.preventDefault();
         if (isUpdating && currentTodo) {
           updateTodo(formData, currentTodo.id, eventId)
-          getTodos(eventId)
+          
           console.log("Updating todo:", { ...currentTodo, ...formData });
         } else {
           addTodo(formData, eventId)
-          getTodos(eventId)
+          
         }
         closeModal();
       };

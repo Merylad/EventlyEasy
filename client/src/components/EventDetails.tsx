@@ -5,6 +5,7 @@ import { Event } from "../features/events/state/eventsSlice";
 import { formatDate } from "./MyEvents";
 import Places from "./Places";
 import Todo from "./Todo";
+import GuestsManager from "./GuestsManager";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || ''
 
@@ -46,6 +47,8 @@ const EventDetails = () : ReactElement => {
 
             <Places eventId = {eventId}/>
             <Todo eventId = {eventId}/>
+            <GuestsManager eventId = {eventId}/>
+           
         </>
     )
 }

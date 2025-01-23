@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage"; // Default is localStorage for 
 import userReducer from "../features/users/state/usersSlice";
 import eventsReducer from '../features/events/state/eventsSlice'
 import todoReducer from '../features/todos/state/todoSlice'
+import guestReducer from '../features/guests/state/guestsSlice'
 
 const persistConfig = {
   key: "root", // Key for localStorage
@@ -13,7 +14,8 @@ const persistConfig = {
 const appReducer = combineReducers({
   user: userReducer,
   events : eventsReducer,
-  todos : todoReducer
+  todos : todoReducer,
+  guests : guestReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, appReducer);
