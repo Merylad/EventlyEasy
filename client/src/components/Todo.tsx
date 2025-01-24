@@ -165,7 +165,7 @@ const Todo = (props : TodoProps) :ReactElement => {
                 onClick={() => openModal(todo)}
                 className="px-4 py-2 bg-blue-100 text-blue-500 text-sm font-medium rounded-md hover:bg-blue-200"
               >
-                Update
+                Edit
               </button>
               <button
                 onClick={() => handleDelete(todo.id!)}

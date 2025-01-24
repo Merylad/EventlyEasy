@@ -34,6 +34,7 @@ const Places = (props: PlacesProps): ReactElement => {
     cons: "",
     final_choice : false
   });
+  const [error, setError] = useState<string>('')
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -46,6 +47,7 @@ const Places = (props: PlacesProps): ReactElement => {
   };
 
   const openModal = (place: PlacesT | null = null) => {
+    setError('')
     setIsModalOpen(true);
     if (place) {
       setIsUpdating(true);
@@ -75,6 +77,16 @@ const Places = (props: PlacesProps): ReactElement => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (Number(formData.price) < 0){
+      setError('The price can not be negative')
+      return
+    }
+
+    if(formData.name.trim() === ''){
+      setError('You need to provide a name')
+      return
+    }
+
     try {
       if (isUpdating && currentPlace) {
         try {
@@ -205,7 +217,7 @@ const Places = (props: PlacesProps): ReactElement => {
                 onClick={() => openModal(place)}
                 className="px-4 py-2 bg-blue-100 text-blue-500 text-sm font-medium rounded-md hover:bg-blue-200"
               >
-                Update
+                Edit
               </button>
               <button
                 onClick={() => handleDelete(place.id)}
@@ -340,6 +352,7 @@ const Places = (props: PlacesProps): ReactElement => {
                   {isUpdating ? "Update" : "Add"}
                 </button>
               </div>
+              {error && <p className="text-red-500 mb-4">Error: {error}</p>}
             </form>
           </div>
         </div>
