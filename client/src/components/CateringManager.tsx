@@ -6,6 +6,7 @@ type CateringProps = {
 
 const CateringManager = (props : CateringProps) : ReactElement => {
     const eventId = props.eventId 
+    console.log(eventId)
 
     
 
