@@ -6,6 +6,7 @@ import { formatDate } from "./MyEvents";
 import Places from "./Places";
 import Todo from "./Todo";
 import GuestsManager from "./GuestsManager";
+import CateringManager from "./CateringManager";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -59,6 +60,14 @@ const EventDetails = (): ReactElement => {
               Guests
             </a>
           </li>
+          <li>
+            <a
+              href="#catering"
+              className="text-lg font-medium hover:underline"
+            >
+              Catering
+            </a>
+          </li>
         </ul>
       </nav>
 
@@ -83,6 +92,10 @@ const EventDetails = (): ReactElement => {
 
       <div id="guests">
         <GuestsManager eventId={eventId} />
+      </div>
+
+      <div id="catering">
+        <CateringManager eventId={eventId} />
       </div>
     </>
   );
