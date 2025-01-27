@@ -21,19 +21,26 @@ const Homepage = (): ReactElement => {
   useEffect(() => {
     if (selectedEvent) {
       const interval = setInterval(() => {
-        const eventDate = new Date(selectedEvent.date).getTime();
-        const now = Date.now();
+        const eventDate = new Date(selectedEvent.date).setHours(0, 0, 0, 0); // Midnight of the event date
+        const now = new Date().setHours(0, 0, 0, 0); // Midnight of today
+  
         const timeDiff = eventDate - now;
-
-        if (timeDiff <= 0) {
+  
+        if (timeDiff < 0) {
+          // Event is in the past
           setCountdown("🎉 Event already behind! Hope you enjoyed!");
           clearInterval(interval);
+        } else if (timeDiff === 0) {
+          // Today is the event day
+          setCountdown("🎉 D-Day! Have an amazing party 🎉🎊");
+          clearInterval(interval); // No need to update further
         } else {
-          const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-          setCountdown(`${days} days left to celebrate 🎉 !`);
+          // Future event
+          const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Round up to the nearest whole day
+          setCountdown(`${days} day${days > 1 ? "s" : ""} left to celebrate 🎉 !`);
         }
       }, 1000);
-
+  
       return () => clearInterval(interval); // Cleanup on unmount or event change
     }
   }, [selectedEvent]);
