@@ -114,10 +114,10 @@ const guestSlice = createSlice({
     .addCase(fetchDeleteGuest.rejected, (state, action:any) => {
       state.error = action.payload.message
     })
-    .addCase(fetchUpdateGuest.fulfilled, (state, action)=>{
+    .addCase(fetchUpdateGuest.fulfilled, (state)=>{
       state.statusForGuest = false
     })
-    .addCase(fetchAddGuests.fulfilled, (state, action)=>{
+    .addCase(fetchAddGuests.fulfilled, (state)=>{
       state.statusForGuest = false
     })
   },
