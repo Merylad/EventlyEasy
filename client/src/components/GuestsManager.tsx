@@ -101,36 +101,35 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-center my-8">Guests</h1>
+      <h1 className="text-3xl sm:text-4xl font-bold text-center my-8">Guests</h1>
       {guests.length === 0 && (
-         <div>
-         <h1 className="text-3xl font-bold text-center my-8">You don't have any guest yet :)</h1>          
-       </div>
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-center my-8">You don't have any guest yet :)</h1>          
+        </div>
       )}
-      <div className="flex justify-center items-center mb-8">
+      <div className="flex justify-center items-center mb-8 px-4">
         <button
           onClick={() => openModal()}
-          className="w-6/12 py-3 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition"
+          className="w-full sm:w-6/12 py-2 sm:py-3 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition"
         >
           Add a Guest
         </button>
       </div>
-      <div className="p-6 bg-gray-100 rounded shadow-lg">
-        
+      <div className="p-4 sm:p-6 bg-gray-100 rounded shadow-lg">
         <div className="space-y-4">
           {sortedGuests.map((guest) => (
             <div
               key={guest.id}
-              className="flex items-center justify-between bg-white p-4 rounded shadow"
+              className="flex flex-col sm:flex-row items-center sm:items-start justify-between bg-white p-4 rounded shadow-sm"
             >
-              <div>
-                <p className="text-lg font-medium text-gray-800">{guest.name}</p>
+              <div className="flex-1">
+                <p className="text-base sm:text-lg font-medium text-gray-800">{guest.name}</p>
                 <p className="text-sm text-gray-600">{guest.email || "No email provided"}</p>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row sm:gap-4 w-full sm:w-auto mt-4 sm:mt-0">
                 <button
                   onClick={() => toggleGuestHandler(guest.id)}
-                  className={`px-4 py-2 rounded text-white ${
+                  className={`px-4 py-1 sm:px-4 sm:py-2 rounded text-white w-full sm:w-auto ${
                     guest.is_attending
                       ? "bg-green-500 hover:bg-green-600"
                       : "bg-gray-400 hover:bg-gray-500"
@@ -145,14 +144,14 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
                   onClick={() => {
                     openModal(guest);
                   }}
-                  className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
+                  className="px-4 py-1 sm:px-4 sm:py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded mt-2 sm:mt-0 w-full sm:w-auto"
                   aria-label={`Edit ${guest.name}`}
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => deleteGuestHandler(guest.id)}
-                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+                  className="px-4 py-1 sm:px-4 sm:py-2 bg-red-500 hover:bg-red-600 text-white rounded mt-2 sm:mt-0 w-full sm:w-auto"
                   aria-label={`Delete ${guest.name}`}
                 >
                   Delete
@@ -164,8 +163,8 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
       </div>
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-10/12 sm:w-6/12">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+          <div className="bg-white p-4 sm:p-6 rounded shadow-lg w-full sm:w-10/12 md:w-6/12 lg:w-5/12">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-700 mb-4">
               {isEditMode ? "Edit Guest" : "Add a Guest"}
             </h2>
             <form onSubmit={handleFormSubmit} className="space-y-4">
@@ -220,21 +219,20 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
                   <option value="no">No</option>
                 </select>
               </div>
-              <div className="flex justify-between">
+              <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-4">
                 <button
                   type="submit"
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+                  className="w-full sm:w-5/12 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
                 >
                   {isEditMode ? "Update Guest" : "Add Guest"}
                 </button>
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="w-full bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded ml-4"
+                  className="w-full sm:w-5/12 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded mt-4 sm:mt-0"
                 >
                   Cancel
                 </button>
-                
               </div>
               {error && <p className="text-red-500 mb-4">Error: {error}</p>}
             </form>

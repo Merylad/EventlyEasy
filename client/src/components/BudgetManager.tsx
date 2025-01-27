@@ -154,35 +154,49 @@ const BudgetManager = (props: BudgetProps): ReactElement => {
   };
 
   return (
-    <div className="p-8 bg-pink-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Budget Manager</h1>
-      <div className="flex flex-col items-center bg-pink-200 shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Event Cost Breakdown</h2>
-        <div className="w-96 h-96 mb-6">
+    <div className="p-4 sm:p-8 bg-pink-100 min-h-screen">
+      {/* Header */}
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-gray-800">Budget Manager</h1>
+      
+      {/* Event Cost Breakdown */}
+      <div className="flex flex-col items-center bg-pink-200 shadow-lg rounded-lg p-4 sm:p-6 max-w-xl sm:max-w-4xl mx-auto">
+        <h2 className="text-lg sm:text-2xl font-semibold text-gray-700 mb-4 text-center">Event Cost Breakdown</h2>
+        
+        {/* Pie Chart */}
+        <div className="w-full max-w-xs sm:max-w-sm h-64 sm:h-96 mb-6">
           <Pie data={pieData} options={pieOptions} />
         </div>
-        <h3 className="text-l font-medium mt-4 text-gray-600">
+        
+        {/* Total Information */}
+        <h3 className="text-sm sm:text-lg font-medium mt-4 text-gray-600 text-center">
           Total People Attending: <span className="text-gray-900 font-bold">{numGuestsAttending}</span>
         </h3>
-        <h3 className="text-xl font-medium mt-4 text-gray-600">
+        <h3 className="text-sm sm:text-lg font-medium mt-4 text-gray-600 text-center">
           Total Event Cost: <span className="text-gray-900 font-bold">ILS {totalEventCost.toFixed(2)}</span>
         </h3>
       </div>
-
+  
+      {/* Tasks To Do Section */}
       <div className="mt-8">
-        <h2 className="text-2xl font-semibold text-center mb-6">Tasks To Do</h2>
+        <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">Tasks To Do</h2>
+        
         {todosToDo.length ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* High Priority */}
             <div className="bg-red-100 p-4 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3 text-red-600">High Priority</h3>
+              <h3 className="text-lg font-bold mb-3 text-red-600">High Priority</h3>
               {renderTodosByPriority("high")}
             </div>
+            
+            {/* Medium Priority */}
             <div className="bg-yellow-100 p-4 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3 text-yellow-600">Medium Priority</h3>
+              <h3 className="text-lg font-bold mb-3 text-yellow-600">Medium Priority</h3>
               {renderTodosByPriority("medium")}
             </div>
+            
+            {/* Low Priority */}
             <div className="bg-green-100 p-4 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3 text-green-600">Low Priority</h3>
+              <h3 className="text-lg font-bold mb-3 text-green-600">Low Priority</h3>
               {renderTodosByPriority("low")}
             </div>
           </div>

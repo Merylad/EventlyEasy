@@ -36,11 +36,11 @@ const EventDetails = (): ReactElement => {
     <>
       {/* Navbar */}
       <nav className="bg-violet-800 text-white py-4">
-        <ul className="flex justify-center gap-8">
+        <ul className="flex flex-wrap justify-center gap-4 sm:gap-8 px-2 sm:px-4 text-center">
           <li>
             <a
               href="#locations"
-              className="text-lg font-medium hover:underline"
+              className="text-sm sm:text-lg font-medium hover:underline"
             >
               Locations
             </a>
@@ -48,7 +48,7 @@ const EventDetails = (): ReactElement => {
           <li>
             <a
               href="#tasks"
-              className="text-lg font-medium hover:underline"
+              className="text-sm sm:text-lg font-medium hover:underline"
             >
               Tasks
             </a>
@@ -56,7 +56,7 @@ const EventDetails = (): ReactElement => {
           <li>
             <a
               href="#guests"
-              className="text-lg font-medium hover:underline"
+              className="text-sm sm:text-lg font-medium hover:underline"
             >
               Guests
             </a>
@@ -64,7 +64,7 @@ const EventDetails = (): ReactElement => {
           <li>
             <a
               href="#catering"
-              className="text-lg font-medium hover:underline"
+              className="text-sm sm:text-lg font-medium hover:underline"
             >
               Catering
             </a>
@@ -72,42 +72,42 @@ const EventDetails = (): ReactElement => {
           <li>
             <a
               href="#expenses"
-              className="text-lg font-medium hover:underline"
+              className="text-sm sm:text-lg font-medium hover:underline"
             >
               Expenses
             </a>
           </li>
         </ul>
       </nav>
-
+  
       {/* Event Details */}
-      <div className="flex flex-col items-center bg-gray-100 py-8">
-        <h1 className="text-4xl font-extrabold text-center text-purple-800 mb-4">
+      <div className="flex flex-col items-center bg-gray-100 py-6 px-4 text-center">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-purple-800 mb-3 sm:mb-4">
           {currentEvent?.name}
         </h1>
-        <h2 className="text-2xl font-medium text-center text-pink-600">
+        <h2 className="text-lg sm:text-2xl font-medium text-pink-600">
           {formatDate(currentEvent.date)}
         </h2>
       </div>
-
+  
       {/* Sections */}
-      <div id="locations">
+      <div id="locations" className="px-4 sm:px-6 py-6">
         <Places eventId={eventId} />
       </div>
-
-      <div id="tasks">
+  
+      <div id="tasks" className="px-4 sm:px-6 py-6">
         <Todo eventId={eventId} />
       </div>
-
-      <div id="guests">
+  
+      <div id="guests" className="px-4 sm:px-6 py-6">
         <GuestsManager eventId={eventId} />
       </div>
-
-      <div id="catering">
+  
+      <div id="catering" className="px-4 sm:px-6 py-6">
         <CateringManager eventId={eventId} />
       </div>
-
-      <div id="expenses">
+  
+      <div id="expenses" className="px-4 sm:px-6 py-6">
         <ExpensesManager eventId={eventId} />
       </div>
     </>

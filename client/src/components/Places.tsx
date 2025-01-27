@@ -152,76 +152,87 @@ const Places = (props: PlacesProps): ReactElement => {
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-center my-8">Locations</h1>
-      <div className="flex justify-center items-center mb-8">
+      <h1 className="text-2xl sm:text-4xl font-bold text-center my-4 sm:my-8">
+        Locations
+      </h1>
+      <div className="flex justify-center items-center mb-4 sm:mb-8">
         <button
           onClick={() => openModal()}
-          className="w-6/12 py-3 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition"
+          className="w-11/12 sm:w-6/12 py-2 sm:py-3 bg-purple-600 text-white text-xs sm:text-sm font-medium rounded-md hover:bg-purple-700 transition"
         >
           Add a Location
         </button>
       </div>
-
-      {eventPlaces?.length == 0 && (
+  
+      {eventPlaces?.length === 0 && (
         <div>
-          <h1 className="text-3xl font-bold text-center my-8">You don't have any location yet :)</h1>          
+          <h1 className="text-xl sm:text-3xl font-bold text-center my-4 sm:my-8">
+            You don't have any location yet :)
+          </h1>
         </div>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
         {eventPlaces?.map((place: PlacesT) => (
           <div
             key={place.id}
-            className={`p-6 bg-white shadow-lg rounded-lg border ${
+            className={`p-3 sm:p-4 bg-white shadow-md rounded-md border ${
               place.final_choice ? "border-blue-500" : "border-gray-200"
             }`}
           >
-            <h2 className="text-2xl font-semibold text-gray-800">{place.name}</h2>
-            <p className="text-gray-600 mt-2">{place.description}</p>
-            <div className="mt-4">
+            <h2 className="text-base sm:text-xl font-semibold text-gray-800">
+              {place.name}
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
+              {place.description}
+            </p>
+            <div className="mt-3">
               <h3 className="font-bold text-gray-800">Price:</h3>
-              <p className="text-gray-600"> {place.price !== '' ? `ILS ${place.price}` : 'No price'}</p>
+              <p className="text-gray-600 text-sm">
+                {place.price !== "" ? `ILS ${place.price}` : "No price"}
+              </p>
             </div>
-            <div className="mt-4">
+            <div className="mt-3">
               <h3 className="font-bold text-gray-800">Pros:</h3>
-              <ul className="list-disc list-inside text-gray-600">
+              <ul className="list-disc list-inside text-xs sm:text-sm text-gray-600">
                 {place.pros?.map((pro, index) => (
                   <li key={index}>{pro}</li>
                 ))}
               </ul>
             </div>
-            <div className="mt-4">
+            <div className="mt-3">
               <h3 className="font-bold text-gray-800">Cons:</h3>
-              <ul className="list-disc list-inside text-gray-600">
+              <ul className="list-disc list-inside text-xs sm:text-sm text-gray-600">
                 {place.cons?.map((con, index) => (
                   <li key={index}>{con}</li>
                 ))}
               </ul>
             </div>
-            <div className="mt-6 flex justify-between items-center">
+            <div className="mt-4 flex justify-between items-center">
               <a
                 href={place.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:underline text-sm"
+                className="text-blue-600 hover:underline text-xs"
               >
                 Visit Website
               </a>
               {place.final_choice && (
-                <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
+                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
                   Final Choice
                 </span>
               )}
             </div>
-            <div className="mt-4 flex space-x-2">
+            <div className="mt-3 flex space-x-2">
               <button
                 onClick={() => openModal(place)}
-                className="px-4 py-2 bg-blue-100 text-blue-500 text-sm font-medium rounded-md hover:bg-blue-200"
+                className="px-3 py-1 bg-blue-100 text-blue-500 text-xs font-medium rounded-md hover:bg-blue-200"
               >
                 Edit
               </button>
               <button
                 onClick={() => handleDelete(place.id)}
-                className="px-4 py-2 bg-red-100 text-red-500 text-sm font-medium rounded-md hover:bg-red-200"
+                className="px-3 py-1 bg-red-100 text-red-500 text-xs font-medium rounded-md hover:bg-red-200"
               >
                 Delete
               </button>
@@ -229,16 +240,19 @@ const Places = (props: PlacesProps): ReactElement => {
           </div>
         ))}
       </div>
-
+  
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg w-96">
-            <h2 className="text-xl font-semibold mb-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 px-4 sm:px-8">
+          <div className="bg-white p-3 sm:p-6 rounded-lg w-full max-w-xs sm:max-w-md">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4">
               {isUpdating ? "Update Place" : "Add New Place"}
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
               <div>
-                <label htmlFor="name" className="block text-gray-700 font-medium">
+                <label
+                  htmlFor="name"
+                  className="block text-gray-700 font-medium text-sm"
+                >
                   Name
                 </label>
                 <input
@@ -247,13 +261,16 @@ const Places = (props: PlacesProps): ReactElement => {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                   required
                 />
               </div>
-
+  
               <div>
-                <label htmlFor="url" className="block text-gray-700 font-medium">
+                <label
+                  htmlFor="url"
+                  className="block text-gray-700 font-medium text-sm"
+                >
                   Website URL
                 </label>
                 <input
@@ -262,12 +279,15 @@ const Places = (props: PlacesProps): ReactElement => {
                   name="url"
                   value={formData.url}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 />
               </div>
-
+  
               <div>
-                <label htmlFor="price" className="block text-gray-700 font-medium">
+                <label
+                  htmlFor="price"
+                  className="block text-gray-700 font-medium text-sm"
+                >
                   Price
                 </label>
                 <input
@@ -276,12 +296,15 @@ const Places = (props: PlacesProps): ReactElement => {
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 />
               </div>
-
+  
               <div>
-                <label htmlFor="description" className="block text-gray-700 font-medium">
+                <label
+                  htmlFor="description"
+                  className="block text-gray-700 font-medium text-sm"
+                >
                   Description
                 </label>
                 <textarea
@@ -289,12 +312,15 @@ const Places = (props: PlacesProps): ReactElement => {
                   name="description"
                   value={formData.description}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 ></textarea>
               </div>
-
+  
               <div>
-                <label htmlFor="pros" className="block text-gray-700 font-medium">
+                <label
+                  htmlFor="pros"
+                  className="block text-gray-700 font-medium text-sm"
+                >
                   Pros (comma-separated)
                 </label>
                 <input
@@ -303,12 +329,15 @@ const Places = (props: PlacesProps): ReactElement => {
                   name="pros"
                   value={formData.pros}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 />
               </div>
-
+  
               <div>
-                <label htmlFor="cons" className="block text-gray-700 font-medium">
+                <label
+                  htmlFor="cons"
+                  className="block text-gray-700 font-medium text-sm"
+                >
                   Cons (comma-separated)
                 </label>
                 <input
@@ -317,42 +346,44 @@ const Places = (props: PlacesProps): ReactElement => {
                   name="cons"
                   value={formData.cons}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 />
               </div>
-
+  
               <div>
-          <label htmlFor="finalChoice" className="inline-flex items-center">
-            <input
-              type="checkbox"
-              id="finalChoice"
-              name="final_choice"
-              checked={formData.final_choice}
-              onChange={(e) =>
-                setFormData({ ...formData, final_choice: e.target.checked })
-              }
-              className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
-            />
-            <span className="ml-2 text-gray-700">Mark as Final Choice</span>
-          </label>
-        </div>
-
-              <div className="flex justify-end space-x-4">
+                <label htmlFor="finalChoice" className="inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    id="finalChoice"
+                    name="final_choice"
+                    checked={formData.final_choice}
+                    onChange={(e) =>
+                      setFormData({ ...formData, final_choice: e.target.checked })
+                    }
+                    className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                  />
+                  <span className="ml-2 text-gray-700 text-sm">
+                    Mark as Final Choice
+                  </span>
+                </label>
+              </div>
+  
+              <div className="flex justify-end space-x-2 sm:space-x-4">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300"
+                  className="px-3 py-1 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700"
+                  className="px-3 py-1 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700"
                 >
                   {isUpdating ? "Update" : "Add"}
                 </button>
               </div>
-              {error && <p className="text-red-500 mb-4">Error: {error}</p>}
+              {error && <p className="text-red-500 text-sm">Error: {error}</p>}
             </form>
           </div>
         </div>
