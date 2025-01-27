@@ -6,7 +6,7 @@ import {
   useFetchToggleGuest,
   useGuestSelector,
   useFetchUpdateGuest,
-  useSetError
+  useSetError,
 } from "../features/guests/state/hooks";
 import { NewGuestI, GuestI } from "../features/guests/state/guestsSlice";
 
@@ -17,7 +17,7 @@ type GuestsProps = {
 const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
   if (!eventId) return <div>No event</div>;
 
-  const { guests, error } = useGuestSelector();
+  const { guests, error, statusForGuest } = useGuestSelector();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentGuest, setCurrentGuest] = useState<GuestI | null>(null);
@@ -38,11 +38,17 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
 
   useEffect(() => {
     fetchGuests(eventId);
-    setError('');
   }, [eventId]);
+
+  useEffect(() => {
+    if (!statusForGuest && !error) {
+      closeModal();
+    }
+  }, [statusForGuest, error]);
 
   const openModal = (guest?: GuestI) => {
     setError('')
+
     setIsModalOpen(true);
     if (guest) {
       setFormData(guest);
@@ -56,6 +62,9 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
   };
 
   const closeModal = () => {
+
+    
+    
     setIsModalOpen(false);
     setFormData({
       name: "",
@@ -73,23 +82,16 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
-    // Clear the error before attempting to submit
     setError('');
-  
+
+    if(formData.name.trim()=== ''){
+      setError('You need to provide a name')
+    }
+    
     if (isEditMode && currentGuest) {
       await updateGuest(formData, currentGuest.id, eventId);
-      console.log(error ,'error')
-  
-      if (!error) {
-        closeModal();
-      }
     } else {
       await addGuest(formData, eventId);
-  
-      if (!error) {
-        closeModal();
-      }
     }
   };
 
@@ -101,7 +103,9 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
     <>
       <h1 className="text-4xl font-bold text-center my-8">Guests</h1>
       {guests.length === 0 && (
-        <div className="text-center text-gray-600">No guests at the moment! :)</div>
+         <div>
+         <h1 className="text-3xl font-bold text-center my-8">You don't have any guest yet :)</h1>          
+       </div>
       )}
       <div className="flex justify-center items-center mb-8">
         <button
@@ -112,9 +116,7 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
         </button>
       </div>
       <div className="p-6 bg-gray-100 rounded shadow-lg">
-        {sortedGuests.length === 0 && !error && (
-          <p className="text-gray-500">No guests yet. Add a guest to get started.</p>
-        )}
+        
         <div className="space-y-4">
           {sortedGuests.map((guest) => (
             <div
@@ -175,6 +177,7 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
                   id="name"
                   type="text"
                   value={formData.name}
+                  required
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value, event_id: eventId })
                   }

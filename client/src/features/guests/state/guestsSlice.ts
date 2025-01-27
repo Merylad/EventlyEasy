@@ -16,13 +16,15 @@ export interface GuestI extends NewGuestI {
 
 interface GuestState {
   guests: GuestI[];
-  error : string
+  error : string,
+  statusForGuest: boolean
 }
 
 // Define the initial state using the UsersState type
 const initialState: GuestState = {
 guests : [],
-error : ''
+error : '',
+statusForGuest:false
 };
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '';
@@ -82,12 +84,17 @@ const guestSlice = createSlice({
   reducers: {
     setError : (state, action) => {
       state.error = action.payload
-    }
     },
+
+    setStatusForGuest : (state, action) => {
+      state.error = action.payload
+    }
+  },
     
   extraReducers: (builder) => {
     builder
     .addCase(fetchGuests.fulfilled, (state, action)=>{
+      // state.error = ''
         state.guests = [...action.payload.guests];
     })
     .addCase(fetchGuests.rejected, (state, action : any)=>{
@@ -95,9 +102,11 @@ const guestSlice = createSlice({
   })
     .addCase(fetchAddGuests.rejected, (state, action:any) => {
       state.error = action.payload.message
+      state.statusForGuest = true
     })
     .addCase(fetchUpdateGuest.rejected, (state, action:any) => {
       state.error = action.payload.message
+      state.statusForGuest = true
     })
     .addCase(fetchToggleGuest.rejected, (state, action:any) => {
       state.error = action.payload.message
@@ -105,13 +114,17 @@ const guestSlice = createSlice({
     .addCase(fetchDeleteGuest.rejected, (state, action:any) => {
       state.error = action.payload.message
     })
-
-
+    .addCase(fetchUpdateGuest.fulfilled, (state, action)=>{
+      state.statusForGuest = false
+    })
+    .addCase(fetchAddGuests.fulfilled, (state, action)=>{
+      state.statusForGuest = false
+    })
   },
 });
 
 
 
 export const selectGuests = (state: RootState) => state;
-export const {setError} = guestSlice.actions
+export const {setError, setStatusForGuest} = guestSlice.actions
 export default guestSlice.reducer;

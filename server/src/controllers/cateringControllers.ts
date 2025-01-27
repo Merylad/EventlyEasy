@@ -20,7 +20,12 @@ export const addCatering = async (req:Request, res:Response) =>{
     try {
         const newCatering = await addCateringDB(catering)
         res.status(201).json({message: 'New catering successfully added',catering :newCatering})
-    } catch (error) {
+    } catch (error: any) {
+        
+        if(error.code === '23514'){
+            res.status(400).json({message : 'Cost per guest or additional fees can not be negatives'})
+            return
+        }
         console.log(error)
         res.status(500).json({message : 'Internal server error'})
     }
@@ -34,7 +39,12 @@ export const updateCatering = async (req:Request, res:Response) =>{
         const updatedCatering = await updateCateringDB(catering, cateringId)
         res.status(201).json({message: 'Catering successfully updated',catering :updatedCatering})
 
-    } catch (error) {
+    } catch (error : any) {
+
+        if(error.code === '23514'){
+            res.status(400).json({message : 'Cost per guest or additional fees can not be negatives'})
+            return
+        }
         console.log(error)
         res.status(500).json({message : 'Internal server error'})
     }

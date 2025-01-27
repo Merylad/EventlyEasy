@@ -7,6 +7,7 @@ import Places from "./Places";
 import Todo from "./Todo";
 import GuestsManager from "./GuestsManager";
 import CateringManager from "./CateringManager";
+import ExpensesManager from "./ExpensesManager";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -68,6 +69,14 @@ const EventDetails = (): ReactElement => {
               Catering
             </a>
           </li>
+          <li>
+            <a
+              href="#expenses"
+              className="text-lg font-medium hover:underline"
+            >
+              Expenses
+            </a>
+          </li>
         </ul>
       </nav>
 
@@ -96,6 +105,10 @@ const EventDetails = (): ReactElement => {
 
       <div id="catering">
         <CateringManager eventId={eventId} />
+      </div>
+
+      <div id="expenses">
+        <ExpensesManager eventId={eventId} />
       </div>
     </>
   );

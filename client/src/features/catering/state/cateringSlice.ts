@@ -12,12 +12,12 @@ export interface NewCateringI {
     event_id : string | number
 }
 
-export interface GuestI extends NewCateringI {
+export interface cateringI extends NewCateringI {
   id: string | number;
 }
 
 interface CateringState {
-  catering: GuestI[];
+  catering: cateringI[];
   error : string
 }
 

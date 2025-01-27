@@ -6,6 +6,7 @@ import eventsRouter from './routes/eventsRoutes'
 import todosRouter from './routes/todosRoutes'
 import guestsRouter from './routes/guestsRoutes'
 import cateringRouter from './routes/cateringRoutes'
+import expensesRouter from './routes/expensesRoutes'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ app.use('/api/events', eventsRouter)
 app.use('/api/events/todos', todosRouter)
 app.use('/api/events/guests', guestsRouter)
 app.use('/api/events/catering', cateringRouter)
+app.use('/api/events/expenses', expensesRouter)
 
 console.log(path.join(__dirname, '../../client/dist'))
 

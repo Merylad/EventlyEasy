@@ -6,6 +6,7 @@ import eventsReducer from '../features/events/state/eventsSlice'
 import todoReducer from '../features/todos/state/todoSlice'
 import guestReducer from '../features/guests/state/guestsSlice'
 import cateringReducer from '../features/catering/state/cateringSlice'
+import expenseReducer from '../features/expenses/state/expenseSlice'
 
 const persistConfig = {
   key: "root", // Key for localStorage
@@ -17,7 +18,8 @@ const appReducer = combineReducers({
   events : eventsReducer,
   todos : todoReducer,
   guests : guestReducer,
-  catering : cateringReducer
+  catering : cateringReducer,
+  expenses : expenseReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, appReducer);

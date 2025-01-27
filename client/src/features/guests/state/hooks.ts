@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../../app/store";
 import { useCallback } from "react";
 import { selectorGuestState } from "./selectors";
-import { fetchAddGuests, fetchDeleteGuest, fetchGuests, fetchToggleGuest, fetchUpdateGuest, NewGuestI, setError } from "./guestsSlice";
+import { fetchAddGuests, fetchDeleteGuest, fetchGuests, fetchToggleGuest, fetchUpdateGuest, NewGuestI, setError, setStatusForGuest } from "./guestsSlice";
 
 
 export const useGuestSelector = () => {
@@ -60,5 +60,13 @@ export const useSetError = () => {
   
     return useCallback((err : string) => {
       dispatch(setError( err ));
+    }, [dispatch]);
+}
+
+export const useSetStatusForGuest = () => {
+    const dispatch = useDispatch<AppDispatch>();
+  
+    return useCallback((status : boolean) => {
+      dispatch(setStatusForGuest( status ));
     }, [dispatch]);
 }

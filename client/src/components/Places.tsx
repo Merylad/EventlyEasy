@@ -5,7 +5,7 @@ type PlacesProps = {
   eventId: string | number | undefined;
 };
 
-type PlacesT = {
+export type PlacesT = {
   id: string | number;
   name: string;
   url?: string;
