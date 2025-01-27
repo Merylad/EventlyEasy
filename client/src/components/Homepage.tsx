@@ -108,10 +108,11 @@ const Homepage = (): ReactElement => {
       className="block w-full px-4 py-3 border border-purple-300 bg-white text-gray-700 text-lg rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-purple-500 focus:border-purple-500"
     >
       <option value="-1">Select an event</option>
-      {events.map((event) => (
-        <option value={event.id} key={event.id}>
-          {event.name}
-        </option>
+  {Array.isArray(events) &&
+    events.map((event) => (
+      <option value={event.id} key={event.id}>
+        {event.name}
+      </option>
       ))}
     </select>
   </div>
