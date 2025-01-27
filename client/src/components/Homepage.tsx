@@ -90,7 +90,7 @@ const Homepage = (): ReactElement => {
           </div>
         </div>
       )}
-
+      {loggedIn &&(
 <div className="bg-pink-100 min-h-screen flex flex-col items-center pt-12">
   {/* Select Dropdown */}
   <div className="w-full max-w-sm">
@@ -155,6 +155,8 @@ const Homepage = (): ReactElement => {
     </div>
   )}
 </div>
+)}
+
     </>
   );
 };
