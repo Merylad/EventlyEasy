@@ -5,7 +5,7 @@ import { RootState } from "../../../app/store";
 // Define types for the slice state
 export interface NewGuestI {
     name : string,
-    email : string,
+    email : string | undefined,
     is_attending : boolean,
     event_id : string | number
 }
@@ -94,10 +94,11 @@ const guestSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(fetchGuests.fulfilled, (state, action)=>{
-      // state.error = ''
+      state.statusForGuest = false
         state.guests = [...action.payload.guests];
     })
     .addCase(fetchGuests.rejected, (state, action : any)=>{
+      state.statusForGuest = false
       state.error = action.payload.message
   })
     .addCase(fetchAddGuests.rejected, (state, action:any) => {

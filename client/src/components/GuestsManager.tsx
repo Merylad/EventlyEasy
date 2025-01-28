@@ -24,7 +24,7 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
   
   const [formData, setFormData] = useState<NewGuestI>({
     name: "",
-    email: "",
+    email: undefined,
     is_attending: false,
     event_id: eventId,
   });
@@ -40,11 +40,11 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
     fetchGuests(eventId);
   }, [eventId]);
 
-  useEffect(() => {
-    if (!statusForGuest && !error) {
-      closeModal();
-    }
-  }, [statusForGuest, error]);
+  // useEffect(() => {
+  //   if (!statusForGuest && !error) {
+  //     closeModal();
+  //   }
+  // }, [statusForGuest, error]);
 
   const openModal = (guest?: GuestI) => {
     setError('')
@@ -55,7 +55,7 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
       setIsEditMode(true);
       setCurrentGuest(guest);
     } else {
-      setFormData({ name: "", email: "", is_attending: false, event_id: eventId });
+      setFormData({ name: "", email: undefined, is_attending: false, event_id: eventId });
       setIsEditMode(false);
       setCurrentGuest(null);
     }
@@ -68,7 +68,7 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
     setIsModalOpen(false);
     setFormData({
       name: "",
-      email: "",
+      email: undefined,
       is_attending: false,
       event_id: eventId,
     });
@@ -93,6 +93,13 @@ const GuestsManager = ({ eventId }: GuestsProps): ReactElement => {
     } else {
       await addGuest(formData, eventId);
     }
+
+    setTimeout(() => {
+      // Check if there was an error from Redux
+      if (!statusForGuest && !error) {
+          closeModal(); // Close the modal if there is no error
+      } 
+  }, 1000); // Wait 1 second for Redux to update the error state
   };
 
   const deleteGuestHandler = (id: number | string) => deleteGuest(id, eventId);

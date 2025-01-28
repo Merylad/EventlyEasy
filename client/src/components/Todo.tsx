@@ -111,12 +111,14 @@ const Todo = (props : TodoProps) :ReactElement => {
       
           {/* Show message and button when no tasks are available */}
           {todos.length === 0 ? (
-            <div>
-              <h1 className="text-3xl font-bold text-center my-8">Nothing to do at the moment :)</h1>
-              <div className="flex justify-center items-center mb-8 px-4">
+            <div className="flex flex-col items-center justify-center min-h-[50vh]">
+              <h1 className="text-3xl font-bold text-center my-8">
+                Nothing to do at the moment :)
+              </h1>
+              <div className="flex justify-center items-center mb-8 px-4 w-full">
                 <button
                   onClick={() => openModal()}
-                  className="w-6/12 py-3 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition"
+                  className="w-full max-w-md py-3 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition"
                 >
                   Add a Task
                 </button>
@@ -127,26 +129,37 @@ const Todo = (props : TodoProps) :ReactElement => {
               <div className="flex justify-center items-center mb-8 px-4">
                 <button
                   onClick={() => openModal()}
-                  className="w-6/12 py-3 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition"
+                  className="w-full max-w-md py-3 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition"
                 >
                   Add a Task
                 </button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto px-4">
                 {/* Left column: Incomplete tasks */}
                 <div className="space-y-6">
-                  <h2 className="text-lg font-semibold text-gray-700">Incomplete Tasks</h2>
+                  <h2 className="text-lg font-semibold text-gray-700">
+                    Incomplete Tasks
+                  </h2>
                   {todos
                     .filter((todo: TodoI) => !todo.is_completed)
                     .sort((a, b) => {
-                      const priorityOrder: Record<string, number> = { high: 1, medium: 2, low: 3 };
+                      const priorityOrder: Record<string, number> = {
+                        high: 1,
+                        medium: 2,
+                        low: 3,
+                      };
                       const priorityA = a.priority ?? "low";
                       const priorityB = b.priority ?? "low";
                       return priorityOrder[priorityA] - priorityOrder[priorityB];
                     })
                     .map((todo: TodoI) => (
-                      <div key={todo.id} className="p-6 bg-white shadow-lg rounded-lg border border-gray-400">
-                        <h1 className="text-2xl font-semibold text-gray-800">{todo.title}</h1>
+                      <div
+                        key={todo.id}
+                        className="p-6 bg-white shadow-lg rounded-lg border border-gray-400"
+                      >
+                        <h1 className="text-2xl font-semibold text-gray-800">
+                          {todo.title}
+                        </h1>
                         <p className="text-gray-600 mt-2">{todo.description}</p>
                         <span
                           className={`inline-block mt-4 px-3 py-1 text-sm font-medium rounded-full ${
@@ -190,12 +203,19 @@ const Todo = (props : TodoProps) :ReactElement => {
       
                 {/* Right column: Completed tasks */}
                 <div className="space-y-6">
-                  <h2 className="text-lg font-semibold text-gray-700">Completed Tasks</h2>
+                  <h2 className="text-lg font-semibold text-gray-700">
+                    Completed Tasks
+                  </h2>
                   {todos
                     .filter((todo: TodoI) => todo.is_completed)
                     .map((todo: TodoI) => (
-                      <div key={todo.id} className="p-6 bg-white shadow-lg rounded-lg border border-gray-100">
-                        <h1 className="text-2xl font-semibold text-gray-500 line-through">{todo.title}</h1>
+                      <div
+                        key={todo.id}
+                        className="p-6 bg-white shadow-lg rounded-lg border border-gray-100"
+                      >
+                        <h1 className="text-2xl font-semibold text-gray-500 line-through">
+                          {todo.title}
+                        </h1>
                         <p className="text-gray-600 mt-2">{todo.description}</p>
                         <span
                           className={`inline-block mt-4 px-3 py-1 text-sm font-medium rounded-full ${
@@ -249,7 +269,10 @@ const Todo = (props : TodoProps) :ReactElement => {
                 </h2>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="title"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Title
                     </label>
                     <input
@@ -263,7 +286,10 @@ const Todo = (props : TodoProps) :ReactElement => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="description"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Description
                     </label>
                     <textarea
@@ -275,7 +301,10 @@ const Todo = (props : TodoProps) :ReactElement => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label htmlFor="priority" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="priority"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Priority
                     </label>
                     <select
@@ -304,21 +333,24 @@ const Todo = (props : TodoProps) :ReactElement => {
                       }
                       className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
                     />
-                    <label htmlFor="is_completed" className="ml-2 block text-sm text-gray-900">
+                    <label
+                      htmlFor="is_completed"
+                      className="ml-2 block text-sm text-gray-900"
+                    >
                       Mark as Completed
                     </label>
                   </div>
                   <div className="flex justify-end space-x-2">
                     <button
                       type="button"
-                      onClick={() => setIsModalOpen(false)}
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      onClick={closeModal}
+                      className="px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700"
                     >
                       {isUpdating ? "Update Task" : "Add Task"}
                     </button>
