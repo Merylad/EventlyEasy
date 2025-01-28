@@ -2,6 +2,7 @@ import { registerDB, getUserByEmail} from "../models/usersModels";
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
 const dotenv = require('dotenv')
 
 dotenv.config()
@@ -103,3 +104,42 @@ export const login = async (req: Request, res: Response) => {
     }
 }
 
+export const contact = async (req: Request, res: Response): Promise<void> => {
+    const { name, email, message } = req.body;
+  
+    // Validate request data
+    if (!name || !email || !message) {
+      res.status(400).json({ error: "All fields are required" });
+      return;
+    }
+  
+    try {
+      // Configure Nodemailer Transporter
+      const transporter = nodemailer.createTransport({
+        service: "Gmail", // Use Gmail or another email provider
+        auth: {
+          user: process.env.EMAIL_USER, // Your email address
+          pass: process.env.EMAIL_PASS, // Email password or app-specific password
+        },
+        tls: {
+            rejectUnauthorized: false, // Ignore certificate errors
+          },
+      });
+  
+      // Email Content
+      const mailOptions = {
+        from: email, // Sender's email
+        to: process.env.EMAIL_USER, // Your email to receive messages
+        subject: `New Message from ${name}`,
+        text: `${message} from email : ${email}`,
+      };
+  
+      // Send Email
+      await transporter.sendMail(mailOptions);
+  
+      res.status(200).json({ message: "Email sent successfully!" });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      res.status(500).json({ error: "Failed to send email" });
+    }
+  };

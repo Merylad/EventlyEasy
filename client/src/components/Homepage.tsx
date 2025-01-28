@@ -5,6 +5,7 @@ import { useUserSelector } from "../features/users/state/hooks";
 import { useEventsSelector, useFetchEvents } from "../features/events/hooks";
 import { formatDate } from "./MyEvents";
 import BudgetManager from "./BudgetManager";
+import { Link } from "react-router-dom";
 
 const Homepage = (): ReactElement => {
   const { loggedIn, user } = useUserSelector();
@@ -137,6 +138,14 @@ const Homepage = (): ReactElement => {
                 </p>
                 <div className="mt-6">
                   <p className="text-xl sm:text-3xl font-bold text-pink-500">{countdown}</p>
+                </div>
+                <div className="mt-6">
+                <Link
+                  to={`/event/${eventId}`}
+                  className="px-4 py-2 bg-indigo-600 text-white text-xs sm:text-sm font-medium rounded-md hover:bg-indigo-700 transition w-full sm:w-28 text-center"
+                >
+                  View Details
+                </Link>
                 </div>
               </div>
   

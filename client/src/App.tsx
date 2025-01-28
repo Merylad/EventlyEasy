@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom'
 import Homepage from './components/Homepage'
 import MyEvents from './components/MyEvents'
 import EventDetails from './components/EventDetails'
+import ContactForm from './components/ContactForm'
 
 function App() {
   
@@ -20,6 +21,7 @@ function App() {
     <Route path='/register' element={<Register />} />
     <Route path = '/myevents' element = {<MyEvents />} />
     <Route path = '/event/:eventId' element = {<EventDetails />} />
+    <Route path = '/contact' element = {<ContactForm />}/>
 
     </Routes>
     </>

@@ -17,6 +17,7 @@ const Navbar = (): ReactElement => {
   return (
     <nav className="bg-gradient-to-l from-purple-600 to-indigo-600 p-4 shadow-lg">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
+        
         {/* Left Side: Logo */}
         <img
           src={logo}
@@ -74,6 +75,12 @@ const Navbar = (): ReactElement => {
                 className="text-white text-sm font-medium hover:underline"
               >
                 My Events
+              </a>
+              <a
+                href="/contact"
+                className="text-white text-sm font-medium hover:underline"
+              >
+                Contact
               </a>
               <a
                 href="/"
